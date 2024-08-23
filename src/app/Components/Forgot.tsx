@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useModalContext } from './ModalContext'; // Certifique-se de que o caminho está correto
+
 
 interface ForgotPasswordModalProps {
   isOpen: boolean;

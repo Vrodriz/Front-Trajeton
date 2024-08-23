@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import PasswordResetInfoModal from './PasswordResetInfoModal'; 
 
 interface PasswordRecoverySuccessModalProps {
   onClose: () => void;

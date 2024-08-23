@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import App from './Components/App'; // Ajuste o caminho conforme necessário
-import Login from './Components/Login'; // Certifique-se de que este componente existe
+import App from './Components/App'; 
+import Login from './Components/Login'; 
 import ForgotPasswordModal from './Components/Forgot';
 import PasswordRecoverySuccessModal from './Components/RecoverySuccessModal';
 import PasswordResetInfoModal from './Components/PasswordResetInfoModal';
