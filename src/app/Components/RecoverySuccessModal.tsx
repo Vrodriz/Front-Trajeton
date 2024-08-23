@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import PasswordResetInfoModal from './PasswordResetInfoModal'; // Importe o novo modal
+import PasswordResetInfoModal from './PasswordResetInfoModal'; 
 
 interface PasswordRecoverySuccessModalProps {
   onClose: () => void;
-  onResetPasswordClick: () => void; // Nova prop para abrir o modal de redefinição de senha
+  onResetPasswordClick: () => void; 
 }
 
 const PasswordRecoverySuccessModal: React.FC<PasswordRecoverySuccessModalProps> = ({ onClose, onResetPasswordClick }) => {

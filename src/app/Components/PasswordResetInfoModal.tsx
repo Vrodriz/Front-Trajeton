@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import PasswordResetFormModal from './PasswordResetFormModal'; // Importe o modal de formulário de recuperação de senha
+import PasswordResetFormModal from './PasswordResetFormModal'; 
 
 interface PasswordResetInfoModalProps {
   onClose: () => void;

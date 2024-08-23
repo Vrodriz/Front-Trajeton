@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useModalContext } from './ModalContext'; // Ajuste o caminho conforme necessário
 
 interface LoginProps {
   onForgotPasswordClick: () => void;
