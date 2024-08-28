@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 interface ModalContextProps {
   isForgotPasswordModalOpen: boolean;
@@ -17,10 +17,10 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false);
   const [isPasswordRecoverySuccessModalOpen, setPasswordRecoverySuccessModalOpen] = useState(false);
 
-  const openForgotPasswordModal = () => setForgotPasswordModalOpen(true);
-  const closeForgotPasswordModal = () => setForgotPasswordModalOpen(false);
-  const openPasswordRecoverySuccessModal = () => setPasswordRecoverySuccessModalOpen(true);
-  const closePasswordRecoverySuccessModal = () => setPasswordRecoverySuccessModalOpen(false);
+  const openForgotPasswordModal = useCallback(() => setForgotPasswordModalOpen(true), []);
+  const closeForgotPasswordModal = useCallback(() => setForgotPasswordModalOpen(false), []);
+  const openPasswordRecoverySuccessModal = useCallback(() => setPasswordRecoverySuccessModalOpen(true), []);
+  const closePasswordRecoverySuccessModal = useCallback(() => setPasswordRecoverySuccessModalOpen(false), []);
 
   return (
     <ModalContext.Provider value={{

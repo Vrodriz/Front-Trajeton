@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-
 
 interface ForgotPasswordModalProps {
   isOpen: boolean;
@@ -15,25 +14,26 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
     try {
-      // Simulação de envio de e-mail
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula um delay
+      // Simula um delay de envio
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
       onSuccess(); // Chama a função de sucesso ao enviar o e-mail
     } catch (err) {
       setError('Ocorreu um erro ao enviar o e-mail. Tente novamente.');
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [onSuccess]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-80 relative">
         <button
           onClick={onClose}
@@ -42,7 +42,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
           <XMarkIcon className="h-6 w-6" />
         </button>
         <h2 className="text-black text-xl font-bold mb-4">Esqueci minha senha</h2>
-        <p className='text-black text-sm mb-4'>Para recuperar sua senha, digite o e-mail cadastrado</p>
+        <p className="text-black text-sm mb-4">Para recuperar sua senha, digite o e-mail cadastrado</p>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -50,7 +50,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
             <input
               type="email"
               id="forgotEmail"
-              className=" text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className={`text-black mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${isSubmitting ? 'bg-gray-100' : 'border-gray-300'}`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -60,7 +60,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
           <button
             type="submit"
             className={`w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !email}
           >
             {isSubmitting ? 'Enviando...' : 'Enviar'}
           </button>
@@ -70,4 +70,4 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
   );
 };
 
-export default ForgotPasswordModal;
+export default memo(ForgotPasswordModal);

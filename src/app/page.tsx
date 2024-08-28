@@ -6,60 +6,71 @@ import Login from './Components/Login';
 import ForgotPasswordModal from './Components/Forgot';
 import PasswordRecoverySuccessModal from './Components/RecoverySuccessModal';
 import PasswordResetInfoModal from './Components/PasswordResetInfoModal';
-import PasswordResetFormModal from './Components/PasswordResetFormModal'; // Importe o novo modal
+import PasswordResetFormModal from './Components/PasswordResetFormModal';
 
-const Page = () => {
-  const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false);
-  const [isPasswordRecoverySuccessModalOpen, setPasswordRecoverySuccessModalOpen] = useState(false);
-  const [isPasswordResetInfoModalOpen, setPasswordResetInfoModalOpen] = useState(false);
-  const [isPasswordResetFormModalOpen, setPasswordResetFormModalOpen] = useState(false);
+type ModalType = 
+  | 'forgotPassword'
+  | 'passwordRecoverySuccess'
+  | 'passwordResetInfo'
+  | 'passwordResetForm'
+  | null;
 
-  const handleOpenForgotPasswordModal = () => setForgotPasswordModalOpen(true);
-  const handleCloseForgotPasswordModal = () => setForgotPasswordModalOpen(false);
+const MODAL_TYPES = {
+  NONE: null as ModalType,
+  FORGOT_PASSWORD: 'forgotPassword' as ModalType,
+  PASSWORD_RECOVERY_SUCCESS: 'passwordRecoverySuccess' as ModalType,
+  PASSWORD_RESET_INFO: 'passwordResetInfo' as ModalType,
+  PASSWORD_RESET_FORM: 'passwordResetForm' as ModalType,
+};
 
-  const handleOpenPasswordRecoverySuccessModal = () => setPasswordRecoverySuccessModalOpen(true);
-  const handleClosePasswordRecoverySuccessModal = () => setPasswordRecoverySuccessModalOpen(false);
+const Page: React.FC = () => {
+  const [activeModal, setActiveModal] = useState<ModalType>(MODAL_TYPES.NONE);
 
-  const handleOpenPasswordResetInfoModal = () => setPasswordResetInfoModalOpen(true);
-  const handleClosePasswordResetInfoModal = () => setPasswordResetInfoModalOpen(false);
-
-  const handleOpenPasswordResetFormModal = () => setPasswordResetFormModalOpen(true);
-  const handleClosePasswordResetFormModal = () => setPasswordResetFormModalOpen(false);
+  const openModal = (modalType: ModalType) => setActiveModal(modalType);
+  const closeModal = () => setActiveModal(MODAL_TYPES.NONE);
 
   return (
     <>
-      <Login onForgotPasswordClick={handleOpenForgotPasswordModal} />
-      <App />
-      <ForgotPasswordModal 
-        isOpen={isForgotPasswordModalOpen} 
-        onClose={handleCloseForgotPasswordModal} 
-        onSuccess={() => {
-          handleCloseForgotPasswordModal();
-          handleOpenPasswordRecoverySuccessModal();
-        }}
+      <Login 
+        onForgotPasswordClick={() => openModal(MODAL_TYPES.FORGOT_PASSWORD)} 
+        onCreateAccountClick={() => {
+          // Implemente a lógica para criar uma conta ou navegue para uma página de registro
+          console.log('Criar nova conta');
+        }} 
       />
-      {isPasswordRecoverySuccessModalOpen && (
-        <PasswordRecoverySuccessModal
-          onClose={() => handleClosePasswordRecoverySuccessModal()}
-          onResetPasswordClick={() => {
-            handleClosePasswordRecoverySuccessModal();
-            handleOpenPasswordResetInfoModal();
+      <App />
+      {activeModal === MODAL_TYPES.FORGOT_PASSWORD && (
+        <ForgotPasswordModal 
+          isOpen 
+          onClose={closeModal} 
+          onSuccess={() => {
+            closeModal();
+            openModal(MODAL_TYPES.PASSWORD_RECOVERY_SUCCESS);
           }}
         />
       )}
-      {isPasswordResetInfoModalOpen && (
+      {activeModal === MODAL_TYPES.PASSWORD_RECOVERY_SUCCESS && (
+        <PasswordRecoverySuccessModal
+          onClose={closeModal}
+          onResetPasswordClick={() => {
+            closeModal();
+            openModal(MODAL_TYPES.PASSWORD_RESET_INFO);
+          }}
+        />
+      )}
+      {activeModal === MODAL_TYPES.PASSWORD_RESET_INFO && (
         <PasswordResetInfoModal 
           onClose={() => {
-            handleClosePasswordResetInfoModal();
-            handleOpenPasswordResetFormModal();
+            closeModal();
+            openModal(MODAL_TYPES.PASSWORD_RESET_FORM);
           }} 
         />
       )}
-      {isPasswordResetFormModalOpen && (
-        <PasswordResetFormModal onClose={handleClosePasswordResetFormModal} />
+      {activeModal === MODAL_TYPES.PASSWORD_RESET_FORM && (
+        <PasswordResetFormModal onClose={closeModal} />
       )}
     </>
   );
-}
+};
 
 export default Page;
