@@ -40,7 +40,7 @@ const PasswordResetInfoModal: React.FC<PasswordResetInfoModalProps> = ({ onClose
       </div>
 
       {isPasswordResetFormModalOpen && (
-        <PasswordResetFormModal onClose={handleClosePasswordResetFormModal} />
+        <PasswordResetFormModal onClose={handleClosePasswordResetFormModal} email={''} />
       )}
     </>
   );

@@ -34,7 +34,6 @@ const Page: React.FC = () => {
       <Login 
         onForgotPasswordClick={() => openModal(MODAL_TYPES.FORGOT_PASSWORD)} 
         onCreateAccountClick={() => {
-          // Implemente a lógica para criar uma conta ou navegue para uma página de registro
           console.log('Criar nova conta');
         }} 
       />

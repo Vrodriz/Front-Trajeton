@@ -11,12 +11,13 @@ function App() {
   const handleCloseModal = () => setModalOpen(false);
 
   return (
-    <div>
+    <div className='bg-white text-white'>
       <button onClick={handleOpenModal}>Esqueci minha senha</button>
       <ForgotPasswordModal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-      />
+        isOpen={isModalOpen}
+        onClose={handleCloseModal} onSuccess={function (): void {
+          throw new Error('Function not implemented.');
+        } }      />
     </div>
   );
 }
