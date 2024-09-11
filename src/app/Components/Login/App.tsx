@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import ForgotPasswordModal from './Forgot'; 
+import ForgotPasswordModal from '../RecoverPassword/Forgot'; 
 
 
 function App() {

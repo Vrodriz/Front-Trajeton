@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import App from './Components/App'; 
-import Login from './Components/Login'; 
-import ForgotPasswordModal from './Components/Forgot';
-import PasswordRecoverySuccessModal from './Components/RecoverySuccessModal';
-import PasswordResetInfoModal from './Components/PasswordResetInfoModal';
-import PasswordResetFormModal from './Components/PasswordResetFormModal';
+import Login from './Components/Login/Login'; 
+import ForgotPasswordModal from './Components/RecoverPassword/Forgot';
+import PasswordRecoverySuccessModal from './Components/RecoverPassword/RecoverySuccessModal';
+import PasswordResetInfoModal from './Components/RecoverPassword/PasswordResetInfoModal';
+import PasswordResetFormModal from './Components/RecoverPassword/PasswordResetFormModal';
+import { useRouter } from 'next/navigation';
+import Dashboard from './Dashboard/page';    
 
 type ModalType = 
   | 'forgotPassword'
@@ -25,9 +26,14 @@ const MODAL_TYPES = {
 
 const Page: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(MODAL_TYPES.NONE);
+  const router = useRouter(); 
 
   const openModal = (modalType: ModalType) => setActiveModal(modalType);
   const closeModal = () => setActiveModal(MODAL_TYPES.NONE);
+
+  const handleLoginSuccess = () => {
+    router.push('/Dashboard'); 
+  };
 
   return (
     <>
@@ -36,8 +42,8 @@ const Page: React.FC = () => {
         onCreateAccountClick={() => {
           console.log('Criar nova conta');
         }} 
+        onLoginSuccess={handleLoginSuccess} 
       />
-      <App />
       {activeModal === MODAL_TYPES.FORGOT_PASSWORD && (
         <ForgotPasswordModal 
           isOpen 

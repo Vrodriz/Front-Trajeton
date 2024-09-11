@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PasswordResetFormModal from './PasswordResetFormModal';
+import PasswordResetFormModal from '../RecoverPassword/PasswordResetFormModal';
 
 const ExampleComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,7 +10,7 @@ const ExampleComponent = () => {
       <button onClick={() => setIsModalOpen(true)}>Redefinir Senha</button>
       {isModalOpen && (
         <PasswordResetFormModal
-          email={email}
+          //email={email}
           onClose={() => setIsModalOpen(false)}
         />
       )}

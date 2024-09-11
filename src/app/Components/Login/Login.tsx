@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useState, useCallback, memo, useMemo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+
+
 interface LoginProps {
   onForgotPasswordClick: () => void;
-  onCreateAccountClick: () => void;  
+  onCreateAccountClick: () => void;
+  onLoginSuccess: () => void;
 }
 
 const validatePassword = (password: string) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*])[A-Za-z\d@#$%^&*]{8,32}$/.test(password);
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-const Login: React.FC<LoginProps> = ({ onForgotPasswordClick, onCreateAccountClick }) => {
+const Login: React.FC<LoginProps> = ({ onForgotPasswordClick, onCreateAccountClick, onLoginSuccess }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState<{ email?: string, password?: string, general?: string }>({});
   const [message, setMessage] = useState<string>(''); 
@@ -49,7 +52,8 @@ const Login: React.FC<LoginProps> = ({ onForgotPasswordClick, onCreateAccountCli
         if (response.token) {
           localStorage.setItem('token', response.token);
           setMessage('Login realizado com sucesso');
-          //router.push('/dashboard');
+
+          router.push('/Dashboard');
         } else {
           setError({ general: 'Falha no login. Verifique suas credenciais e tente novamente.' });
         }
